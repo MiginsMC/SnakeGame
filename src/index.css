@@ -1,0 +1,82 @@
+/* body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+} */
+
+/* .square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+} */
+
+.box {
+  background-color: #d9d9d9; 
+  border: 0.2px solid black;
+ }
+
+ .dark {
+   background-color: black;
+   border: 0.2px solid black;
+ }
+
+.red {
+  background-color: red;
+  border: 0.2px solid red;
+}
+
+.game-board{ 
+  display: grid;
+  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+  grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+  justify-content: center;
+  position: relative;
+ }
+
+.game {
+  font-size: 30px;
+}
+
+.text-block {
+  visibility: hidden;
+}
+
+.text-block1 {
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 1px 1px 7px #000000;
+  -moz-box-shadow: 1px 1px 7px #000000;
+  box-shadow: 1px 1px 7px #000000;
+  background-color: #000000;
+  padding: 10px;
+  z-index: 6;
+  opacity: 0.9;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 21pt;
+  color: #FFF5EE;
+  text-align: center;
+  outline: 0px solid #000000;
+  margin-left: 400px;
+  margin-right: 400px;
+  /* margin-bottom: 400px;
+  margin-top: 400px; */
+}
