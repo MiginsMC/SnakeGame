@@ -73,9 +73,6 @@ class Game extends Component {
   }
 
   includes(x, y) {
-    // this.props.on.some(
-    //   (o) => o.posX === this.props.posX && o.posY === this.props.posY
-    // )
     if (this.state.on.some((e) => e.posX === x && e.posY === y)) {
       return true;
     }
@@ -180,6 +177,30 @@ class Game extends Component {
     setTimeout(() => this.timeout(), 175);
   }
 
+  restart() {
+    console.log("restarting")
+    if (this.disabled === false) return;
+    console.log(this.state);
+    this.setState({
+      on: [
+        {
+          posX: 4,
+          posY: 5,
+          direction: 0,
+        },
+        {
+          posX: 4,
+          posY: 4,
+          direction: 0,
+        },
+      ],
+      red: [Math.floor(Math.random() * 9), Math.floor(Math.random() * 9)],
+      direction: 0,
+      disabled: false,
+      score: 0,
+    }, () => this.timeout());
+  }
+
   render() {
     const items = [];
     for (let i = 0; i < 9; i++) {
@@ -196,13 +217,14 @@ class Game extends Component {
         High Score: {localStorage.getItem("score") || this.state.score}
         <div className="layout">
           <div className="game-board">{items}</div>
-          <div
+          <button type="button"
             className={
               this.state.disabled === true ? "text-block1" : "text-block"
             }
+            onClick={ () => this.restart()}
           >
             <p>You died L</p>
-          </div>
+          </button>
         </div>
       </div>
     );
