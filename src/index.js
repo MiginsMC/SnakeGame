@@ -193,7 +193,7 @@ class Game extends Component {
       <div className="game">
         Score: {this.state.score}
         <br />
-        High Score: {localStorage.getItem("score") || this.state.score}
+        High Score:: {localStorage.getItem("score") || this.state.score}
         <div className="layout">
           <div className="game-board">{items}</div>
           <div
