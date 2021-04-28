@@ -232,7 +232,7 @@ class Game extends Component {
             }
             onClick={ () => this.restart()}
           >
-            <p>You died L</p>
+            <p>You died</p>
           </button>
         </div>
       </div>
