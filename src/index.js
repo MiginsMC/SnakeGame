@@ -20,11 +20,17 @@ class Game extends Component {
           direction: 0,
         },
       ],
-      red: [Math.floor(Math.random() * 9), Math.floor(Math.random() * 9)],
+      red: [],
       direction: 0,
       disabled: false,
       score: 0,
     };
+  }
+
+  getRandomPos() {
+    const e = [Math.floor(Math.random() * 9), Math.floor(Math.random() * 9)];
+    if (this.state.on.some((o) => o.posX === e[0] && o.posY === e[1])) return this.getRandomPos();
+    return e;
   }
 
   handleScoreChange() {
@@ -166,6 +172,9 @@ class Game extends Component {
   }
 
   componentDidMount() {
+    this.setState({
+      red: this.getRandomPos(),
+    })
     setTimeout(() => this.timeout(), 100);
     document.addEventListener("keydown", this.handleKeyDown);
   }
