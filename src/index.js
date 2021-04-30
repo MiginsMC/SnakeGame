@@ -10,13 +10,13 @@ class Game extends Component {
     this.state = {
       on: [
         {
-          posX: 4,
-          posY: 5,
+          posX: 7,
+          posY: 8,
           direction: 0,
         },
         {
-          posX: 4,
-          posY: 4,
+          posX: 7,
+          posY: 7,
           direction: 0,
         },
       ],
@@ -28,7 +28,7 @@ class Game extends Component {
   }
 
   getRandomPos() {
-    const e = [Math.floor(Math.random() * 9), Math.floor(Math.random() * 9)];
+    const e = [Math.floor(Math.random() * 15), Math.floor(Math.random() * 15)];
     if (this.state.on.some((o) => o.posX === e[0] && o.posY === e[1])) return this.getRandomPos();
     return e;
   }
@@ -45,7 +45,7 @@ class Game extends Component {
   }
 
   addPos(x, y) {
-    if (x === -1 || x === 9 || y === -1 || y === 9) {
+    if (x === -1 || x === 15 || y === -1 || y === 15) {
       return this.disable();
     }
     if (this.state.red[0] === x && this.state.red[1] === y) {
@@ -63,11 +63,11 @@ class Game extends Component {
   }
 
   addOpPos(x, y) {
-    if (x === -1 || x === 9 || y === -1 || y === 9) {
+    if (x === -1 || x === 15 || y === -1 || y === 15) {
       return this.disable();
     }
     this.setState({
-      red: [Math.floor(Math.random() * 9), Math.floor(Math.random() * 9)],
+      red: [Math.floor(Math.random() * 15), Math.floor(Math.random() *15)],
     });
     this.setState((prevState) => ({
       on: [
@@ -183,7 +183,7 @@ class Game extends Component {
     if (this.state.disabled === true) return;
     this.addPosFromDirection();
     this.removeOldestPos();
-    setTimeout(() => this.timeout(), 175);
+    setTimeout(() => this.timeout(), 120);
   }
 
   restart() {
@@ -193,17 +193,17 @@ class Game extends Component {
     this.setState({
       on: [
         {
-          posX: 4,
-          posY: 5,
+          posX: 7,
+          posY: 8,
           direction: 0,
         },
         {
-          posX: 4,
-          posY: 4,
+          posX: 7,
+          posY: 7,
           direction: 0,
         },
       ],
-      red: [Math.floor(Math.random() * 9), Math.floor(Math.random() * 9)],
+      red: [Math.floor(Math.random() * 15), Math.floor(Math.random() * 15)],
       direction: 0,
       disabled: false,
       score: 0,
@@ -212,8 +212,8 @@ class Game extends Component {
 
   render() {
     const items = [];
-    for (let i = 0; i < 9; i++) {
-      for (let e = 0; e < 9; e++) {
+    for (let i = 0; i < 15; i++) {
+      for (let e = 0; e < 15; e++) {
         items.push(
           <Square posX={e} posY={i} on={this.state.on} red={this.state.red} />
         );
@@ -233,6 +233,7 @@ class Game extends Component {
             onClick={ () => this.restart()}
           >
             <p>You died</p>
+            <p className="smaller-text">Click to respawn</p>
           </button>
         </div>
       </div>
