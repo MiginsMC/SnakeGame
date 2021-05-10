@@ -14,8 +14,14 @@
 }
 
 .red {
-	background-color: red;
+	background-color: #e5c4e9;
+	content: url('apple.png');
 	/* border: 0.2px solid red; */
+}
+
+.red:nth-child(even) {
+	background-color: #d4aada;
+	content: url('apple.png');
 }
 
 .game-board {
