@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Square from './Square';
 import './index.css';
+import { HexColorPicker } from 'react-colorful';
 
 class Game extends Component {
 	constructor(props) {
@@ -68,7 +69,7 @@ class Game extends Component {
 			return this.disable();
 		}
 		this.setState({
-			red: [Math.floor(Math.random() * 15), Math.floor(Math.random() * 15)],
+			red: this.getRandomPos(),
 		});
 		this.setState(prevState => ({
 			on: [
@@ -176,7 +177,8 @@ class Game extends Component {
 		this.setState({
 			red: this.getRandomPos(),
 		});
-		setTimeout(() => this.timeout(), 100);
+		setTimeout(() => this.timeout(), 200);
+		document.documentElement.style.setProperty('--snake-color', localStorage.getItem('snake-color') ? localStorage.getItem('snake-color') : '#000000');
 		document.addEventListener('keydown', this.handleKeyDown);
 	}
 
@@ -184,7 +186,7 @@ class Game extends Component {
 		if (this.state.disabled === true) return;
 		this.addPosFromDirection();
 		this.removeOldestPos();
-		setTimeout(() => this.timeout(), 120);
+		setTimeout(() => this.timeout(), 200);
 	}
 
 	restart() {
@@ -214,6 +216,11 @@ class Game extends Component {
 		);
 	}
 
+	handleColorChange(color) {
+		document.documentElement.style.setProperty('--snake-color', color);
+		localStorage.setItem('snake-color', color);
+	}
+
 	render() {
 		const items = [];
 		for (let i = 0; i < 15; i++) {
@@ -224,23 +231,32 @@ class Game extends Component {
 			}
 		}
 		return (
-			<div className="game">
-				Score: {this.state.score}
-				<br />
-				High Score: {localStorage.getItem('score') || this.state.score}
-				<div className="layout">
-					<div className="game-board">{items}</div>
-					<button
-						type="button"
-						className={
-							this.state.disabled === true ? 'text-block1' : 'text-block'
-						}
-						onClick={() => this.restart()}
-					>
-						<p>You died</p>
-						<p className="smaller-text">Click to respawn</p>
-					</button>
+			<div>
+				<div className="game">
+					Score: {this.state.score}
+					<br />
+					High Score: {localStorage.getItem('score') || this.state.score}
+					<div className="layout">
+						<div className="game-board">{items}</div>
+						<button
+							type="button"
+							className={
+								this.state.disabled === true ? 'text-block1' : 'text-block'
+							}
+							onClick={() => this.restart()}
+						>
+							<p>You died</p>
+							<p className="smaller-text">Click to respawn</p>
+						</button>
+					</div>
 				</div>
+				<HexColorPicker
+					className='picker'
+					color={document.documentElement.style.getPropertyValue(
+						'--snake-color'
+					)}
+					onChange={this.handleColorChange}
+				/>
 			</div>
 		);
 	}
