@@ -23,8 +23,11 @@ class Game extends Component {
 			],
 			red: [],
 			direction: 0,
-			disabled: false,
+			disabled: true,
 			score: 0,
+			pressed: false,
+			deleteTimeout: false,
+			startTimeout: false,
 		};
 	}
 
@@ -147,6 +150,33 @@ class Game extends Component {
 
 	handleKeyDown(e) {
 		// if (this.state.disabled === true) return;
+		if (e.keyCode === 32) {
+			if (this.state.pressed === true) return;
+			if (this.state.disabled === false) {
+				return this.setState({
+					pressed: true,
+					deleteTimeout: true,
+				});
+			}
+		}
+		switch (e.keyCode) {
+			case 37:
+			case 36:
+			case 38:
+			case 87:
+			case 39:
+			case 68:
+			case 40:
+			case 83:
+			case 32:
+				if (this.state.pressed === true) return;
+				this.setState({ pressed: true });
+				if (this.state.disabled === true) this.setState({ startTimeout: true });
+				// if (this.state.disabled) this.restart();
+				break;
+			default:
+				break;
+		}
 		switch (e.keyCode) {
 			case 37: // left / a
 			case 65:
@@ -183,16 +213,21 @@ class Game extends Component {
 	}
 
 	timeout() {
-		if (this.state.disabled === true) return;
+		if (this.state.disabled === true && this.state.startTimeout === false)
+			return setTimeout(() => this.timeout(), 200);
+		if (this.state.startTimeout === true) return this.restart();
+		// TODO Make space reset when timeout is not looping
+		if (this.state.deleteTimeout === true) {
+			console.log('GONE');
+			return this.restart();
+		}
 		this.addPosFromDirection();
 		this.removeOldestPos();
+		this.setState({ pressed: false });
 		setTimeout(() => this.timeout(), 200);
 	}
 
 	restart() {
-		console.log('restarting');
-		if (this.disabled === false) return;
-		console.log(this.state);
 		this.setState(
 			{
 				on: [
@@ -207,12 +242,14 @@ class Game extends Component {
 						direction: 0,
 					},
 				],
-				red: [Math.floor(Math.random() * 15), Math.floor(Math.random() * 15)],
+				red: this.getRandomPos(),
 				direction: 0,
 				disabled: false,
 				score: 0,
+				deleteTimeout: false,
+				startTimeout: false,
 			},
-			() => this.timeout()
+			async () => this.timeout()
 		);
 	}
 
