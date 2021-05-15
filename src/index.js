@@ -161,7 +161,7 @@ class Game extends Component {
 		}
 		switch (e.keyCode) {
 			case 37:
-			case 36:
+			case 65:
 			case 38:
 			case 87:
 			case 39:
@@ -169,7 +169,9 @@ class Game extends Component {
 			case 40:
 			case 83:
 			case 32:
-				if (this.state.pressed === true) return;
+				if (this.state.pressed === true) {
+					return;
+				}
 				this.setState({ pressed: true });
 				if (this.state.disabled === true) this.setState({ startTimeout: true });
 				// if (this.state.disabled) this.restart();
@@ -208,23 +210,25 @@ class Game extends Component {
 			red: this.getRandomPos(),
 		});
 		setTimeout(() => this.timeout(), 200);
-		document.documentElement.style.setProperty('--snake-color', localStorage.getItem('snake-color') ? localStorage.getItem('snake-color') : '#000000');
+		document.documentElement.style.setProperty(
+			'--snake-color',
+			localStorage.getItem('snake-color')
+				? localStorage.getItem('snake-color')
+				: '#000000'
+		);
 		document.addEventListener('keydown', this.handleKeyDown);
 	}
 
 	timeout() {
 		if (this.state.disabled === true && this.state.startTimeout === false)
 			return setTimeout(() => this.timeout(), 200);
-		if (this.state.startTimeout === true) return this.restart();
-		// TODO Make space reset when timeout is not looping
-		if (this.state.deleteTimeout === true) {
-			console.log('GONE');
+		if (this.state.startTimeout === true || this.state.deleteTimeout === true)
 			return this.restart();
-		}
 		this.addPosFromDirection();
 		this.removeOldestPos();
 		this.setState({ pressed: false });
-		setTimeout(() => this.timeout(), 200);
+		const time = 200 - this.state.score * 2;
+		setTimeout(() => this.timeout(), time >= 100 ? time : 100);
 	}
 
 	restart() {
@@ -280,7 +284,7 @@ class Game extends Component {
 							className={
 								this.state.disabled === true ? 'text-block1' : 'text-block'
 							}
-							onClick={() => this.restart()}
+							onClick={() => this.setState({ startTimeout: true })}
 						>
 							<p>You died</p>
 							<p className="smaller-text">Click to respawn</p>
@@ -288,7 +292,7 @@ class Game extends Component {
 					</div>
 				</div>
 				<HexColorPicker
-					className='picker'
+					className="picker"
 					color={document.documentElement.style.getPropertyValue(
 						'--snake-color'
 					)}
