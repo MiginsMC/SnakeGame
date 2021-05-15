@@ -150,8 +150,10 @@ class Game extends Component {
 
 	handleKeyDown(e) {
 		// if (this.state.disabled === true) return;
+
 		if (e.keyCode === 32) {
 			if (this.state.pressed === true) return;
+			e.preventDefault();
 			if (this.state.disabled === false) {
 				return this.setState({
 					pressed: true,
@@ -161,12 +163,15 @@ class Game extends Component {
 		}
 		switch (e.keyCode) {
 			case 37:
-			case 65:
 			case 38:
-			case 87:
 			case 39:
-			case 68:
 			case 40:
+				e.preventDefault();
+			// ignoring warning about not having 'break', it's on purpose :)
+			// eslint-disable-next-line
+			case 65:
+			case 87:
+			case 68:
 			case 83:
 			case 32:
 				if (this.state.pressed === true) {
@@ -174,7 +179,6 @@ class Game extends Component {
 				}
 				this.setState({ pressed: true });
 				if (this.state.disabled === true) this.setState({ startTimeout: true });
-				// if (this.state.disabled) this.restart();
 				break;
 			default:
 				break;
@@ -267,7 +271,7 @@ class Game extends Component {
 		for (let i = 0; i < 15; i++) {
 			for (let e = 0; e < 15; e++) {
 				items.push(
-					<Square posX={e} posY={i} on={this.state.on} red={this.state.red} />
+					<Square posX={e} posY={i} on={this.state.on} red={this.state.red} key={`${i}_${e}`} />
 				);
 			}
 		}
