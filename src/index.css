@@ -85,7 +85,7 @@
 .text-block1 {
 	cursor: pointer;
 	-webkit-border-radius: 6px;
-	transform: translateY(100%);
+	transform: translateY(20%);
 	-moz-border-radius: 6px;
 	border-radius: 6px;
 	-webkit-box-shadow: 1px 1px 7px #000000;

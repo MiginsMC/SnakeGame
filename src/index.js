@@ -28,6 +28,7 @@ class Game extends Component {
 			pressed: false,
 			deleteTimeout: false,
 			startTimeout: false,
+			beginning: true,
 		};
 	}
 
@@ -256,6 +257,7 @@ class Game extends Component {
 				score: 0,
 				deleteTimeout: false,
 				startTimeout: false,
+				beginning: false,
 			},
 			async () => this.timeout()
 		);
@@ -290,8 +292,8 @@ class Game extends Component {
 							}
 							onClick={() => this.setState({ startTimeout: true })}
 						>
-							<p>You died</p>
-							<p className="smaller-text">Click to respawn</p>
+							<p>{this.state.beginning === true ? "Welcome!" : "You died"}</p>
+							<p className="smaller-text">{this.state.beginning === true ? "Your goal is to eat as many apples as you can, use the W A S D or the arrow keys to move (or start) and press the space bar to restart if you desire! Click here to begin!" : "Click to respawn"}</p>
 						</button>
 					</div>
 				</div>
