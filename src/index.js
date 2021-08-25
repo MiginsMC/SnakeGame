@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Square from './Square';
+import Square from './square';
 import './index.css';
 import { HexColorPicker } from 'react-colorful';
 
